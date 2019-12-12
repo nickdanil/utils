@@ -27,10 +27,12 @@ $ docker run -d --hostname rabbit --name rabbit --restart always -p 15672:15672 
 
 ## Postgres
 ```
-TODO
+$ docker volume create postgres_data
+$ docker run -d --name postgres -v postgres_data:/var/lib/postgresql/data -p 5432:5432 postgres
 ```
 
-## Postgres + pgadmin
+## Pgadmin
 ```
-TODO
+$ docker volume create pgadmin4_data
+$ docker run -p 8080:80 -e 'PGADMIN_DEFAULT_EMAIL=admin@pgadmin4.com' -e 'PGADMIN_DEFAULT_PASSWORD=admin' -v pgadmin4_data:/var/lib/pgadmin -d dpage/pgadmin4
 ```
