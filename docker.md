@@ -30,7 +30,7 @@ $ docker run -d --hostname rabbit --name rabbit --restart always -p 15672:15672 
 ## Postgres
 ```
 $ docker volume create postgres_data
-$ docker run -d --name postgres -v postgres_data:/var/lib/postgresql/data -p 5432:5432 postgres
+$ docker run -d --name postgres -v postgres_data:/var/lib/postgresql/data -p 5432:5432 postgres -c shared_preload_libraries='pg_stat_statements' -c pg_stat_statements.max=10000 -c pg_stat_statements.track=all
 ```
 
 ## Pgadmin
