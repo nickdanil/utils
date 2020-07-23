@@ -24,7 +24,7 @@ $ sudo docker run --restart=always -p 5601:5601 -p 9200:9200 -p 5044:5044 -e MAX
 
 ## RabbitMQ Management
 ```
-$ docker run -d --hostname rabbit --name rabbit --restart always -p 15672:15672 rabbitmq:3-management
+$ docker run -d --hostname rabbit --name rabbit --restart always -p 15672:15672 -p 5672:5672 rabbitmq:3-management
 ```
 
 ## Postgres
