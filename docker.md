@@ -12,7 +12,7 @@ $ docker run -d -p 8000:8000 -p 9000:9000 --name portainer --restart always -v \
 
 ### PORTAINER - LINUX
 ```
-docker run -d -p 8000:8000 -p 9000:9000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
 ```
 
 ## ELK
@@ -37,4 +37,9 @@ $ docker run -d --name postgres -e 'POSTGRES_PASSWORD=postgres' -v postgres_data
 ```
 $ docker volume create pgadmin4_data
 $ docker run -p 8080:80 -e 'PGADMIN_DEFAULT_EMAIL=admin@pgadmin4.com' -e 'PGADMIN_DEFAULT_PASSWORD=admin' -v pgadmin4_data:/var/lib/pgadmin -d dpage/pgadmin4
+```
+
+## Apache Drill
+```
+$ docker run -i --name drill -p 8047:8047 -t nickdanil/apache-drill /bin/bash
 ```
