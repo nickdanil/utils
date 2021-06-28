@@ -30,7 +30,7 @@ $ docker run -d --hostname rabbit --name rabbit --restart always -p 15672:15672 
 ## Postgres
 ```
 $ docker volume create postgres_data
-$ docker run -d --name postgres -e 'POSTGRES_PASSWORD=postgres' -v postgres_data:/var/lib/postgresql/data -p 5432:5432 postgres -c shared_preload_libraries='pg_stat_statements' -c pg_stat_statements.max=10000 -c pg_stat_statements.track=all
+$ docker run -d --name postgres -e POSTGRES_PASSWORD=postgres -v postgres_data:/var/lib/postgresql/data -p 5432:5432 -c shared_preload_libraries='pg_stat_statements' -c pg_stat_statements.max=10000 -c pg_stat_statements.track=all --restart=always postgres
 ```
 
 ## Pgadmin
@@ -42,4 +42,13 @@ $ docker run -p 8080:80 -e 'PGADMIN_DEFAULT_EMAIL=admin@pgadmin4.com' -e 'PGADMI
 ## Apache Drill
 ```
 $ docker run -i --name drill -p 8047:8047 -t nickdanil/apache-drill /bin/bash
+```
+
+## Vault
+```
+$ docker volume create vault_data
+$ docker run --restart=always --volume vault_data:/opt/ -e 'VAULT_DEV_ROOT_TOKEN_ID=root' -e 'VAULT_USE_V1_API:secret' -p 8200:8200 --name vault geoffreybooth/vault-dev
+$ docker cp D:\projects\github\utils\docker-data\vault-secrets.json vault:/opt/secrets.json
+$ docker cp D:\projects\github\utils\docker-data\vault-policies.json vault:/opt/policies.json
+$ docker restart vault
 ```
