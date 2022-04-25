@@ -18,5 +18,10 @@ $ kubectl config set-context namespace/test.cluster.ru/kubeuser --user=kubeuser/
 
 ## use-context
 ```
-$ kubectl config use-context namespace/okd.tusvc.bcs.ru/kubeuser
+$ kubectl config use-context namespace/test.cluster.ru/kubeuser
+```
+
+## create job from cronjob
+```
+$ kubectl create job --from=cronjob/crawler catalog-ms-crawler
 ```

@@ -52,3 +52,29 @@ $ docker cp D:\projects\github\utils\docker-data\vault-secrets.json vault:/opt/s
 $ docker cp D:\projects\github\utils\docker-data\vault-policies.json vault:/opt/policies.json
 $ docker restart vault
 ```
+
+
+
+## Redis
+```
+$ docker network create my-net
+$ docker volume create redis_data
+$ docker run --restart=always --net my-net -p 6379:6379 -v redis_data:/data --name local-redis -d redis redis-server --save 60 1 --loglevel debug --requirepass "2wsx2WSX"
+```
+
+## Redis-exporter
+```
+$ docker run --restart=always --net my-net --name redis-exporter -p 9121:9121 -e 'REDIS_ADDR=redis://local-redis:6379' -e REDIS_PASSWORD=2wsx2WSX bitnami/redis-exporter:latest
+```
+
+## Apache Cassandra
+```
+$ docker volume create cassandra_data
+$ docker run --restart=always -p 9042:9042 --name cassandra -v cassandra_data:/bitnami -d bitnami/cassandra:latest
+```
+
+## Apache ScyllaDB
+```
+$ docker volume create scylla_data
+$ docker run --restart=always -p 9042:9042 --name scylla -v scylla_data:/var/lib/scylla -d scylladb/scylla
+```
