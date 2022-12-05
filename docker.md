@@ -30,7 +30,7 @@ $ docker run -d --hostname rabbit --name rabbit --restart always -p 15672:15672 
 ## Postgres
 ```
 $ docker volume create postgres_data
-$ docker run -d --name postgres -e POSTGRES_PASSWORD=postgres -v postgres_data:/var/lib/postgresql/data -p 5432:5432 -c shared_preload_libraries='pg_stat_statements' -c pg_stat_statements.max=10000 -c pg_stat_statements.track=all --restart=always postgres
+$ docker run -d --name postgres -e POSTGRES_PASSWORD=postgres -v postgres_data:/var/lib/postgresql/data -p 5432:5432 --restart=always postgres
 ```
 
 ## Pgadmin
@@ -57,14 +57,18 @@ $ docker restart vault
 
 ## Redis
 ```
-$ docker network create my-net
 $ docker volume create redis_data
+### Redis only by password
 $ docker run --restart=always --net my-net -p 6379:6379 -v redis_data:/data --name local-redis -d redis redis-server --save 60 1 --loglevel debug --requirepass "2wsx2WSX"
+### Redis by login+password
+$ docker run --restart=always -p 6379:6379 -v redis_data:/opt/bitnami/redis/mounted-etc -e ALLOW_EMPTY_PASSWORD=yes -e REDIS_ACLFILE=/opt/bitnami/redis/mounted-etc/users.acl --name redis bitnami/redis
+$ docker cp D:\projects\github\utils\docker-data\redis\users.acl redis:/opt/bitnami/redis/mounted-etc/users.acl
+$ docker restart redis
 ```
 
 ## Redis-exporter
 ```
-$ docker run --restart=always --net my-net --name redis-exporter -p 9121:9121 -e 'REDIS_ADDR=redis://local-redis:6379' -e REDIS_PASSWORD=2wsx2WSX bitnami/redis-exporter:latest
+$ docker run --restart=always --name redis-exporter -p 9121:9121 -e 'REDIS_ADDR=redis://local-redis:6379' -e REDIS_PASSWORD=2wsx2WSX bitnami/redis-exporter:latest
 ```
 
 ## Apache Cassandra
