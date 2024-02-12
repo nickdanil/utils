@@ -54,12 +54,11 @@ $ docker restart vault
 ```
 
 
-
 ## Redis
 ```
 $ docker volume create redis_data
 ### Redis only by password
-$ docker run --restart=always --net my-net -p 6379:6379 -v redis_data:/data --name local-redis -d redis redis-server --save 60 1 --loglevel debug --requirepass "2wsx2WSX"
+$ docker run --restart=always -p 6379:6379 -v redis_data:/data --name local-redis -d redis redis-server --save 60 1 --loglevel debug --requirepass "2wsx2WSX"
 ### Redis by login+password
 $ docker run --restart=always -p 6379:6379 -v redis_data:/opt/bitnami/redis/mounted-etc -e ALLOW_EMPTY_PASSWORD=yes -e REDIS_ACLFILE=/opt/bitnami/redis/mounted-etc/users.acl --name redis bitnami/redis
 $ docker cp D:\projects\github\utils\docker-data\redis\users.acl redis:/opt/bitnami/redis/mounted-etc/users.acl
@@ -81,4 +80,9 @@ $ docker run --restart=always -p 9042:9042 --name cassandra -v cassandra_data:/b
 ```
 $ docker volume create scylla_data
 $ docker run --restart=always -p 9042:9042 --name scylla -v scylla_data:/var/lib/scylla -d scylladb/scylla
+```
+
+## Structurizr
+```
+docker run --restart=always -it -p 8981:8080 -v /Users/DNikitchuk/Documents/projects/rds-architecture/system:/usr/local/structurizr -d structurizr/lite
 ```
